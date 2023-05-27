@@ -1,0 +1,570 @@
+3)
+
+SQL> QUERY 1
+SQL> select name,club,country from players where position="Midfielder" and country="USA";
+
+Output: 
+name                    country                 club
+-------------------     -------------------     -----------
+ALEJANDRO BEDOYA  	FC Nantes	            USA
+BRAD DAVIS	            Houston Dynamo	      USA
+GRAHAM ZUSI       	Sporting Kansas City  	USA
+JERMAINE JONES	      Besiktas JK	            USA
+JULIAN GREEN	      FC Bayern Muenchen	USA
+KYLE BECKERMAN	      Real Salt Lake	      USA
+MICHAEL BRADLEY	      Toronto FC	            USA
+MIX DISKERUD	      Rosenborg BK	      USA
+
+8 row(s) returned
+
+SQL> Query 2
+sql> select name,club,country,year(now())- year(dob) as Age from players where is_captain=1 ;
+
+name			    	club				country			Age
+-------------------     -------------------     -------------------     -----------
+MARIO YEPES			Atalanta Bergamo		Columbia			46
+GIANLUIGI BUFFON		Juventus FC			Italy				44
+GEORGIOS KARAGOUNIS	Fulham FC			Greece			45
+SAMUEL ETOO			Chelsea FC			Cameroon			41
+IKER CASILLAS		Real Madrid CF		Spain				41
+RAFAEL MARQUEZ		Club Leon			Mexico			43
+NOEL VALLADARES		CD Olimpia			Honduras			45
+JAVAD NEKOUNAM		Kuwait SC			Iran				42
+VINCENT ENYEAMA		Lille OSC			Nigeria			40
+PHILIPP LAHM		FC Bayern Muenchen	Germany			39
+MILE JEDINAK		Crystal Palace FC		Australia			38
+CRISTIANO RONALDO		Real Madrid CF		Portugal			37
+ANTONIO VALENCIA		Manchester United FC	Ecuador			37
+CLAUDIO BRAVO		Real Sociedad		Chile				39
+CLINT DEMPSEY		Seattle Sounders FC	USA				39
+ASAMOAH GYAN		Al Ain FC			Ghana				37
+DARIJO SRNA	Shakhtar 	Donetsk			Croatia			40
+DIDIER DROGBA		Galatasaray SK		Ivory Coast			44
+BRYAN RUIZ	PSV 		Eindhoven			Costa Rica			37
+STEVEN GERRARD		Liverpool FC		England			42
+MADJID BOUGUERRA		Lekhwiya SC			Algeria			40
+VINCENT KOMPANY		Manchester City FC	Belgium			36
+EMIR SPAHIC	Bayer  	Leverkusen			Bosnia & Herzegovina	42
+ROBIN VAN PERSIE		Manchester United FC	Netherlands			39
+LIONEL MESSI		FC Barcelona		Argentina			35
+DIEGO LUGANO		West Bromwich Albion FC	Uruguay			42
+GOKHAN INLER		SSC Napoli			Switzerland			38
+MAKOTO HASEBE	 	FC Nuernberg		Japan				38
+THIAGO SILVA		Paris Saint-Germain FC	Brazil			38
+KOO JACHEOL			FSV Mainz 05		South Korea			33
+HUGO LLORIS	Tottenham 	Hotspur FC			France			36
+ROMAN SHIROKOV		FC Krasnodar		Russia			41
+
+32 row(s) returned
+
+SQL> Query 3
+SQL> select country_name from country where (no_of_worldcup_won)>2 ;
+
+country_name
+--------------
+Brazil
+Germany
+Italy
+
+3 row(s) returned
+
+
+SQL>Query 4
+SQL> select country_name from country where (no_of_worldcup_won)=0 ;
+
+country_name
+-----------------------
+Algeria
+Australia
+Belgium
+Bosnia & Herzegovina
+Cameroon
+Chile
+Columbia
+Costa Rica
+Croatia
+Ecuador
+Ghana
+Greece
+Honduras
+Iran
+Ivory Coast
+Japan
+Mexico
+Netherlands
+Nigeria
+Portugal
+Russia
+South Korea
+Switzerland
+USA
+
+24 row(s) returned
+
+SQL> Query 5
+SQL> select p.name,p.country from players as p where p.player_id in(select c.player_id from player_cards as c where c.yellow_cards=0 AND c.red_cards=0);
+
+name         country
+---------    -------------
+
+0 row(s) returned
+
+
+SQL> Query 6
+sql> select p.name,p.country,c.red_cards as most_no_of_red_cards from players as p,player_cards as c where p.player_id=c.player_id and c.red_cards=(select(max(red_cards)) from player_cards) ;
+
+name                          country 		most_no_of_red_cards
+------------------------      --------------    ----------------------------
+CLAUDIO MARCHISIO			Italy			1
+OSCAR DUARTE			Costa Rica		1
+ANTE REBIC				Croatia		1
+STEVEN DEFOUR			Belgium		1
+ALEXANDRE SONG			Cameroon		1
+PEPE FERREIRA			Portugal		1
+WILSON PALACIOS			Honduras		1
+KONSTANTINOS KATSOURANIS	Greece		1
+MAXIMILIANO PEREIRA		Uruguay		1
+ANTONIO VALENCIA			Ecuador		1
+
+10 row(s) returned
+
+
+SQL> Query 7
+SQL> select host_city,count(*) as total_number_of_games from match_results group by(host_city);
+
+
+host_city               total_number_of_games
+-------------------     --------------------------
+Sao Paulo			6
+Natal				4
+Salvador			6
+Cuiaba			4
+Belo Horizonte		6
+Recife			5
+Fortaleza			6
+Manaus			4
+Brasilia			7
+Porto Alegre		5
+Rio De Janerio		7
+Curitiba			4
+
+12 row(s) returned
+
+SQL>Query 8
+SQL>select host_city,count(*) as number_of_games from match_results group by(host_city) order by(count(*)) desc limit 1; #  rownum=1;
+
+
+
+
+
+SQL>Query 9
+SQL>select team1,count(match_id) as number_of_games_played_as_team1,sum(team1_score) as total_goals_scored,sum(team2_score) as total_goals_against from match_results group by(team1);
+
+team1                   number_of_games_played_as_team1           total_goals_scored   		total_goals_against
+--------------------    --------------------------------------    -----------------------       ----------------------------
+Algeria			1							1					1
+Argentina			4							5					1
+Australia			2							2					6
+Belgium			3							5					2
+Bosnia & Herzegovina	1							3					1
+Brazil			6							7					13
+Cameroon			2							1					8
+Chile				1							3					1
+Columbia			3							7					1
+Costa Rica			2							1					1
+Croatia			1							1					3
+Ecuador			1							0					0
+England			1							1					2
+France			3							5					1
+Germany			4							9					3
+Ghana				1							1					2
+Greece			1							2					1
+Honduras			2							1					5
+Iran				1							0					0
+Italy				2							0					2
+Ivory Coast			1							2					1
+Japan				2							1					4
+Mexico			1							1					0
+Netherlands			4							4					1
+Nigeria			2							3					3
+Portugal			1							2					1
+Russia			1							1					1
+South Korea			2							2					5
+Spain				2							1					7
+Switzerland			2							4					6
+Uruguay			2							3					4
+USA				2							2					3
+
+32 row(s) returned
+
+SQL>Query 10
+SQL>select team2,count(match_id) as number_of_games_played_as_team2,sum(team2_score) as total_goals_scored,sum(team1_score) as total_goals_against from match_results group by(team2);
+
+team2				 number_of_games_played_as_team2	total_goals_scored	total_goals_against
+-----------------------  -------------------------------    --------------------    -------------------------
+Algeria			 3						6				6
+Argentina			 3						3				3
+Australia			 1						1				3
+Belgium			 2						1				1
+Bosnia & Herzegovina	 2						1				3
+Brazil			 1						4				1
+Cameroon			 1						0				1
+Chile				 3						3				3
+Columbia			 2						5				3
+Costa Rica			 3						4				1
+Croatia			 2						5				3
+Ecuador			 2						3				3
+England			 2						1				2
+France			 2						5				2
+Germany			 3						9				1
+Ghana			 	 2						3				4
+Greece			 3						1				4
+Honduras			 1						0				3
+Iran				 2						1				4
+Italy			     	 1						2				1
+Ivory Coast			 2						2				4
+Japan				 1						1				2
+Mexico			 3						4				3
+Netherlands			 3						11				3
+Nigeria			 2						0				2
+Portugal			 2						2				6
+Russia			 2						1				2
+South Korea		     	 1						1				1
+Spain				 1						3				0
+Switzerland		 	 2						3				1
+Uruguay			 2						1				2
+USA				 2						3				3
+
+32 row(s) returned
+
+SQL>Query11
+SQL>create view team_summary as(
+select team1 as country_name,count(*) as number_of_games_played,sum(team1_score) as total_goals_scored,sum(team2_score) as total_goals_against 
+from match_results group by(team1) 
+union 
+select team2 as country_name,count(*) as number_of_games_played,sum(team2_score) as total_goals_scored,sum(team1_score) as total_goals_against 
+from match_results group by(team2));
+select *from team_summary  order by(number_of_games_played) desc;
+
+
+
+
+
+SQL>Query 12
+SQL>select date_of_match,team1,team2, case when team1_score > team2_score then team1 when
+team1_score < team2_score then team2 when team1_score=team2_score then "Draw" end as Winning_team,
+abs(team1_score - team2_score) as goal_difference from match_results;
+
+date_of_match	team1				team2				Winning_team		goal_difference
+--------------    ----------------        --------------------    ----------------        ----------------------
+2014-06-12		Brazil			Croatia			Brazil			2
+2014-06-13		Mexico			Cameroon			Mexico			1
+2014-06-13		Spain				Netherlands			Netherlands			4
+2014-06-13		Chile				Australia			Chile				2
+2014-06-14		Columbia			Greece			Columbia			3
+2014-06-14		Ivory Coast			Japan				Ivory Coast			1
+2014-06-14		Uruguay			Costa Rica			Costa Rica			2
+2014-06-14		England			Italy				Italy				1
+2014-06-15		Switzerland			Ecuador			Switzerland			1
+2014-06-15		France			Honduras			France			3
+2014-06-15		Argentina			Bosnia & Herzegovina	Argentina			1
+2014-06-16		Iran				Nigeria			Draw				0
+2014-06-16		Germany			Portugal			Germany			4
+2014-06-16		Ghana				USA				USA				1
+2014-06-17		Belgium			Algeria			Belgium			1
+2014-06-17		Russia			South Korea			Draw				0
+2014-06-17		Brazil			Mexico			Draw				0
+2014-06-18		Cameroon			Croatia			Croatia			4
+2014-06-18		Spain				Chile				Chile				2
+2014-06-18		Australia			Netherlands			Netherlands			1
+2014-06-19		Columbia			Ivory Coast			Columbia			1
+2014-06-19		Japan				Greece			Draw				0
+2014-06-19		Uruguay			England			Uruguay			1
+2014-06-20		Italy				Costa Rica			Costa Rica			1
+2014-06-20		Switzerland			France			France			3
+2014-06-20		Honduras			Ecuador			Ecuador			1
+2014-06-21		Argentina			Iran				Argentina			1
+2014-06-21		Nigeria			Bosnia & Herzegovina	Nigeria			1
+2014-06-21		Germany			Ghana				Draw				0
+2014-06-22		USA				Portugal			Draw				0
+2014-06-22		Belgium			Russia			Belgium			1
+2014-06-22		South Korea			Algeria			Algeria			2
+2014-06-23		Cameroon			Brazil			Brazil			3
+2014-06-23		Croatia			Mexico			Mexico			2
+2014-06-23		Australia			Spain				Spain				3
+2014-06-23		Netherlands			Chile				Netherlands			2
+2014-06-24		Japan				Columbia			Columbia			3
+2014-06-24		Greece			Ivory Coast			Greece			1
+2014-06-24		Italy				Uruguay			Uruguay			1
+2014-06-24		Costa Rica			England			Draw				0
+2014-06-25 		Honduras			Switzerland			Switzerland			3
+2014-06-25		Ecuador			France			Draw				0
+2014-06-25		Nigeria			Argentina			Argentina			1
+2014-06-25		Bosnia & Herzegovina	Iran				Bosnia & Herzegovina	2
+2014-06-26		USA				Germany			Germany			1
+2014-06-26		Portugal			Ghana				Portugal			1
+2014-06-26		South Korea			Belgium			Belgium			1
+2014-06-26		Algeria			Russia			Draw				0
+2014-06-28		Brazil			Chile				Draw				0
+2014-06-28		Columbia			Uruguay			Columbia			2
+2014-06-29		Netherlands			Mexico			Netherlands			1
+2014-06-29		Costa Rica			Greece			Draw				0
+2014-06-30		France			Nigeria			France			2
+2014-06-30		Germany			Algeria			Germany			1
+2014-07-01		Argentina			Switzerland			Argentina			1
+2014-07-01		Belgium			USA				Belgium			1
+2014-07-04		Brazil			Columbia			Brazil			1
+2014-07-04		France			Germany			Germany			1
+2014-07-05		Netherlands			Costa Rica			Draw				0
+2014-07-05		Argentina			Belgium			Argentina			1
+2014-07-08		Brazil			Germany			Germany			6
+2014-07-09		Netherlands			Argentina			Draw				0
+2014-07-12		Brazil			Netherlands			Netherlands			3
+2014-07-13		Germany			Argentina			Germany			1
+
+64 row(s) returned
+
+SQL> Query13
+SQL>select * from match_results where team1="Brazil" or team2="Brazil";
+
+match_id	date_of_match	start_time_of_match	team1	 	team2	 		team1_score	 team2_score	stadium_name	 	host_city
+---------   --------------    --------------------    ---------   -------------     ------------ --------------   ---------------------   -----------------
+1		2014-06-12		17:00:00			Brazil	Croatia		3		 1			Arena de Sao Paulo	Sao Paulo
+17		2014-06-17		16:00:00			Brazil	Mexico		0		 0			Estadio Castelao		Fortaleza
+33		2014-06-23		17:00:00			Cameroon	Brazil		1		 4			Estadio Nacional		Brasilia
+49		2014-06-28		13:00:00			Brazil	Chile			1		 1			Estadio Mineirao		Belo Horizonte
+57		2014-07-04		17:00:00			Brazil	Columbia		2		 1			Estadio Castelao		Fortaleza
+61		2014-07-08		17:00:00			Brazil	Germany		1		 7			Estadio Mineirao		Belo Horizonte
+63		2014-07-12		17:00:00			Brazil	Netherlands		0		 3			Estadio Nacional		Brasilia
+
+7 row(s) returned
+
+
+SQL>Query 14
+SQL>select p.name,p.country,sum(a.goals) as number_of_goals from players as p, player_assists_goals as a where  p.player_id=a.player_id and a.goals>0  group by(p.player_id) order by(number_of_goals) DESC;
+
+name               country                number_of_goals
+-----------------  ---------------------  -----------------
+JAMES RODRIGUEZ	 Columbia			6
+THOMAS MUELLER	Germany			5
+NEYMAR SANTOS JR.	Brazil			4
+ROBIN VAN PERSIE	Netherlands			4
+LIONEL MESSI	Argentina			4
+ANDRE SCHUERRLE	Germany			3
+ENNER VALENCIA	Ecuador			3
+XHERDAN SHAQIRI	Switzerland			3
+KARIM BENZEMA	France			3
+ARJEN ROBBEN	Netherlands			3
+TIM CAHILL  	Australia			2
+WILFRIED BONY	Ivory Coast			2
+ABDELMOUMENE DJABO  Algeria			2
+MEMPHIS DEPAY	Netherlands			2
+LUIS SUAREZ		Uruguay			2
+MARIO MANDZUKIC	Croatia			2
+JACKSON MARTINEZ	Columbia			2
+MARIO GOETZE	Germany			2
+IVAN PERISIC	Croatia			2
+ANDRE AYEW		Ghana				2
+GERVINHO YAO KOUASSI	Ivory Coast		2
+ASAMOAH GYAN	Ghana				2
+MIROSLAV KLOSE	Germany			2
+ISLAM SLIMANI	Algeria			2
+AHMED MUSA		Nigeria			2
+CLINT DEMPSEY	USA				2
+ALEXIS SANCHEZ	Chile				2
+BRYAN RUIZ	Costa Rica				2
+MATS HUMMELS	Germany			2
+OSCAR DOS SANTOS JR.	Brazil		2
+DAVID LUIZ		Brazil			2
+TONI KROOS		Germany			2
+JULIAN GREEN	USA				1
+LEROY FER		Netherlands			1
+OGNJEN VRANJES	Bosnia & Herzegovina	1
+JUAN MATA		Spain				1
+JOHN BROOKS		USA				1
+VARELA SILVESTRE	Portugal			1
+KLAAS JAN HUNTELAAR	Netherlands		1
+BLERIM DZEMAILI	Switzerland			1
+DAVID VILLA		Spain				1
+JEAN BEAUSEJOUR	Chile				1
+JAVIER HERNANDEZ	Mexico			1
+JUAN QUINTERO	Columbia			1
+JORGE VALDIVIA	Chile				1
+ALEKSANDR KERZHAKOV	Russia		1
+MARCOS URENA	Costa Rica			1
+LEE KEUNHO		South Korea			1
+ANDREAS SAMARIS	Greece			1
+HARIS SEFEROVIC	Switzerland			1
+FERNANDO TORRES	Spain				1
+VEDAD IBISEVIC	Bosnia & Herzegovina	1
+WAYNE ROONEY	England			1
+OLIVIER GIROUD	France			1
+CLAUDIO MARCHISIO	Italy				1
+ROMELU LUKAKU	Belgium			1
+JOEL MATIP		Cameroon			1
+YACINE BRAHIMI	Algeria			1
+XABI ALONSO		Spain				1
+MARIO BALOTELLI	Italy				1
+MOUSSA SISSOKO	France			1
+CARLO COSTLY	Honduras			1
+IVICA OLIC		Croatia			1
+DIVOCK ORIGI	Belgium			1
+SON HEUNGMIN	South Korea			1
+SHINJI OKAZAKI	Japan				1
+DANIEL STURRIDGE	England			1
+EDIN DZEKO	Bosnia & Herzegovina		1
+REZA GHOOCHANNEJAD	Iran			1
+KEISUKE HONDA	Japan				1
+MILE JEDINAK	Australia			1
+ALEXANDER KOKORIN	Russia			1
+KOO JACHEOL	South Korea				1
+DRIES MERTENS	Belgium			1	
+NANI DA CUNHA	Portugal			1
+MIRALEM PJANIC	Bosnia & Herzegovina	1
+CRISTIANO RONALDO	Portugal			1
+GIOVANI DOS SANTOS	Mexico		1
+PETER ODEMWINGIE	Nigeria			1
+FERNANDINHO LUIZ ROZA	Brazil		1
+ORIBE PERALTA	Mexico			1
+TEOFILO GUTIERREZ	Columbia			1
+EDUARDO VARGAS	Chile				1
+GRANIT XHAKA	Switzerland			1
+ANDRES GUARDADO	Mexico			1		
+MATHIEU VALBUENA	France			1
+OSCAR DUARTE	Costa Rica			1
+ADMIR MEHMEDI	Switzerland			1
+PAUL POGBA		France			1
+RAFAEL MARQUEZ	Mexico			1
+EDINSON CAVANI	Uruguay			1
+DIEGO GODIN		Uruguay			1
+CHARLES ARANGUIZ	Chile				1
+RAFIK HALLICHE	Algeria			1
+SAMI KHEDIRA	Germany			1
+JUAN CUADRADO	Columbia			1
+KEVIN DE BRUYNE	Belgium			1
+SOFIANE FEGHOULI	Algeria			1
+JERMAINE JONES	USA				1
+SOKRATIS PAPASTATHOPOULOS	Greece	1
+GEORGIOS SAMARAS	Greece			1
+JOEL CAMPBELL	Costa Rica			1
+MAROUANE FELLAINI	Belgium			1
+PABLO ARMERO	Columbia			1
+ANGEL DI MARIA	Argentina			1	
+BLAISE MATUIDI	France			1
+JAN VERTONGHEN	Belgium			1
+FRED CHAVES GUEDES	Brazil		1	
+GEORGINIO WIJNALDUM	Netherlands		1
+THIAGO SILVA	Brazil			1
+GONZALO HIGUAIN	Argentina			1
+WESLEY SNEIJDER	Netherlands			1
+MARCOS ROJO		Argentina			1
+MESUT OEZIL		Germany			1
+DALEY BLIND		Netherlands			1
+STEFAN DE VRIJ	Netherlands			1
+
+116 row(s) returned
+
+
+
+SQL>Query 15
+SQL>select p.name,p.country,sum(a.goals) as number_of_goals from players as p, player_assists_goals as a where  p.player_id=a.player_id and a.goals>2  group by(p.player_id) order by(number_of_goals) DESC;
+
+name				country		number_of_goals
+------------------      -------------     --------------------
+JAMES RODRIGUEZ		Columbia		6
+THOMAS MUELLER		Germany		5
+NEYMAR SANTOS JR.		Brazil		4
+ROBIN VAN PERSIE		Netherlands		4
+LIONEL MESSI		Argentina		4
+ANDRE SCHUERRLE		Germany		3
+ENNER VALENCIA		Ecuador		3
+XHERDAN SHAQIRI		Switzerland		3
+KARIM BENZEMA		France		3
+ARJEN ROBBEN		Netherlands		3
+
+10 row(s) returned
+
+
+
+SQL>Query 16
+SQL>select country_name,population from country order by(population) DESC;
+
+country_name		population
+------------------      -------------
+USA				318.90
+Brazil			202.40
+Nigeria			173.60
+Russia			142.46
+Japan				127.06
+Mexico			122.30
+Germany			82.60
+Iran				77.97
+France			64.60
+Italy				61.07
+England			53.50
+South Korea			50.42
+Columbia			49.14
+Spain				47.10
+Argentina			42.30
+Algeria			39.90
+Ghana				25.90
+Australia			23.59
+Cameroon			23.03
+Ivory Coast			20.32
+Chile				17.62
+Netherlands			16.90
+Ecuador			15.98
+Belgium			11.20
+Greece			11.20
+Portugal			10.58
+Honduras			8.09
+Switzerland			8.00
+Costa Rica			4.87
+Croatia			4.25
+Bosnia & Herzegovina	3.83
+Uruguay			3.42
+	
+32 row(s) returned
+
+
+Item(4)--->
+
+primary key: primary key sould not have duplicate values
+
+SQL>insert into country values('Australia',45,3,'varun');
+
+Error Code: 1062. Duplicate entry 'Australia' for key 'country.PRIMARY'
+
+
+Item(5)--->
+
+SQL>drop table players;
+
+Error Code: 3730. Cannot drop table 'players' referenced by a foreign key constraint 'player_assists_goals_ibfk_1' on table 'player_assists_goals'.
+
+Item(6)--->
+
+SQL>insert into player_assists_goals values(367918,5,3,4,100);
+
+1 row(s) affected
+
+SQL>insert into country values('cuba',50.52,4,'varun');
+
+1 row(s) affected
+
+SQL> insert into player_cards values(271253,4,1);
+
+1 row(s) affected
+
+
+
+
+
+
+
+
+
+
+
+
+
